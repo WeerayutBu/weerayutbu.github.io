@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Review | Weerayut Buaphet</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="docreview.css">
+</head>
+
+<body class="docreview-body">
+    <!-- Top Bar -->
+    <header class="dr-header">
+        <div class="dr-header-inner">
+            <a href="index.html" class="dr-back">&larr; Home</a>
+            <h1>Document Review</h1>
+            <label class="upload-label" for="csv-upload">
+                Upload CSV
+                <input type="file" id="csv-upload" accept=".csv" hidden>
+            </label>
+            <select id="column-select" class="dr-select" hidden>
+                <option value="" disabled selected>Column</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Three-column layout: sidebar | viewer | results -->
+    <div class="dr-layout">
+        <!-- Left sidebar: document list -->
+        <aside class="dr-sidebar" id="doc-list">
+            <p class="dr-placeholder">Upload a CSV file to get started.</p>
+        </aside>
+
+        <!-- Center: document viewer -->
+        <main class="dr-main" id="doc-viewer">
+            <p class="dr-placeholder">Select a document to view.</p>
+        </main>
+
+        <!-- Right: results panel -->
+        <aside class="dr-results">
+            <div class="dr-results-header">
+                <h2 class="dr-results-title">Results</h2>
+                <button id="export-btn" class="dr-export-btn" hidden>Export CSV</button>
+            </div>
+            <div id="results-list">
+                <p class="dr-placeholder">Selections will appear here.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Floating popup -->
+    <div class="selection-popup" id="selection-popup">
+        <button data-action="model">Send to model</button>
+        <button data-action="save">Save selection</button>
+    </div>
+
+    <script src="docreview.js"></script>
+</body>
+
+</html>
