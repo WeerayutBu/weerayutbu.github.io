@@ -28,8 +28,11 @@
     <!-- Three-column layout: sidebar | viewer | results -->
     <div class="dr-layout">
         <!-- Left sidebar: document list -->
-        <aside class="dr-sidebar" id="doc-list">
-            <p class="dr-placeholder">Upload a CSV file to get started.</p>
+        <aside class="dr-sidebar">
+            <div class="dr-sidebar-label" id="sidebar-label">Documents</div>
+            <div class="dr-sidebar-list" id="doc-list">
+                <p class="dr-placeholder">Upload a CSV file to get started.</p>
+            </div>
         </aside>
 
         <!-- Center: document viewer -->
@@ -37,8 +40,11 @@
             <p class="dr-placeholder">Select a document to view.</p>
         </main>
 
+        <!-- Resize handle -->
+        <div class="dr-resize" id="resize-handle"></div>
+
         <!-- Right: results panel -->
-        <aside class="dr-results">
+        <aside class="dr-results" id="results-panel">
             <div class="dr-results-header">
                 <h2 class="dr-results-title">Results</h2>
                 <button id="export-btn" class="dr-export-btn" hidden>Export CSV</button>

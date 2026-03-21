@@ -6,6 +6,7 @@
     const popup = document.getElementById('selection-popup');
     const columnSelect = document.getElementById('column-select');
     const exportBtn = document.getElementById('export-btn');
+    const sidebarLabel = document.getElementById('sidebar-label');
 
     let documents = [];
     let allColumns = [];
@@ -118,7 +119,10 @@
                 return;
             }
             allColumns = Object.keys(documents[0]);
-            selectedColumn = allColumns[0];
+            const dataCol = allColumns.find(c => c.toLowerCase() === 'data')
+                || allColumns.find(c => c.toLowerCase() === 'tokens')
+                || allColumns.find(c => c.toLowerCase() === 'text');
+            selectedColumn = dataCol || allColumns[0];
             renderColumnSelect();
             renderDocList();
             selectDoc(0);
@@ -193,10 +197,10 @@
             contentHTML = `<div class="doc-body">${escapeHTML(val)}</div>`;
         }
 
+        sidebarLabel.textContent = `Row ${index + 1}` + (docId ? ` · ID: ${docId}` : '') + (currentTokens.length ? ` · ${currentTokens.length} tokens` : '');
+
         docViewer.innerHTML = `
             <div class="doc-card">
-                <h2>Row ${index + 1}${docId ? ` <span class="doc-id">ID: ${escapeHTML(docId)}</span>` : ''}</h2>
-                ${currentTokens.length ? `<div class="doc-token-count">${currentTokens.length} tokens</div>` : ''}
                 <div class="doc-field">
                     <span class="doc-field-label">${escapeHTML(selectedColumn)}</span>
                     ${contentHTML}
@@ -359,4 +363,35 @@
         }
         return s;
     }
+
+    // ── Resizable Results Panel ──────────────────────────────────
+
+    const resizeHandle = document.getElementById('resize-handle');
+    const resultsPanel = document.getElementById('results-panel');
+
+    let isResizing = false;
+
+    resizeHandle.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        resizeHandle.classList.add('dragging');
+        document.body.style.cursor = 'col-resize';
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+        const containerRight = document.querySelector('.dr-layout').getBoundingClientRect().right;
+        const newWidth = containerRight - e.clientX;
+        const clamped = Math.max(150, Math.min(600, newWidth));
+        resultsPanel.style.width = clamped + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!isResizing) return;
+        isResizing = false;
+        resizeHandle.classList.remove('dragging');
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+    });
 })();

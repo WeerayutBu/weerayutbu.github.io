@@ -95,6 +95,22 @@
     width: 240px;
     flex-shrink: 0;
     border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dr-sidebar-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 0.55rem 1rem;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.dr-sidebar-list {
+    flex: 1;
     overflow-y: auto;
     padding: 0.5rem 0;
 }
@@ -224,11 +240,27 @@
 }
 
 
+/* ── Resize Handle ───────────────────────────────────── */
+.dr-resize {
+    width: 5px;
+    flex-shrink: 0;
+    cursor: col-resize;
+    background: transparent;
+    border-left: 1px solid var(--border);
+    transition: background 0.15s;
+}
+
+.dr-resize:hover,
+.dr-resize.dragging {
+    background: #e0e0e0;
+}
+
 /* ── Results Panel (right) ──────────────────────────── */
 .dr-results {
     width: 300px;
+    min-width: 150px;
+    max-width: 600px;
     flex-shrink: 0;
-    border-left: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     overflow: hidden;
