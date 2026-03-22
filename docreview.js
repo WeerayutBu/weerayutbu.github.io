@@ -252,7 +252,7 @@
     }
 
     // ── Text Selection & Popup ───────────────────────────────────
-    document.addEventListener('mouseup', () => {
+    function showPopupIfSelection() {
         const selection = window.getSelection();
         const text = selection.toString().trim();
 
@@ -266,13 +266,23 @@
         popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`;
         popup.style.top = `${rect.top - 44 + window.scrollY}px`;
         popup.classList.add('visible');
+    }
+
+    document.addEventListener('mouseup', showPopupIfSelection);
+    document.addEventListener('selectionchange', () => {
+        // Debounce selectionchange for touch devices
+        clearTimeout(showPopupIfSelection._timer);
+        showPopupIfSelection._timer = setTimeout(showPopupIfSelection, 300);
     });
 
-    document.addEventListener('mousedown', (e) => {
+    function hidePopupIfOutside(e) {
         if (!popup.contains(e.target)) {
             popup.classList.remove('visible');
         }
-    });
+    }
+
+    document.addEventListener('mousedown', hidePopupIfOutside);
+    document.addEventListener('touchstart', hidePopupIfOutside);
 
     popup.addEventListener('click', (e) => {
         const btn = e.target.closest('button');
