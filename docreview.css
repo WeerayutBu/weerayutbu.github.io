@@ -387,8 +387,14 @@
 
 /* ── Responsive ─────────────────────────────────────── */
 @media (max-width: 900px) {
+    .docreview-body {
+        overflow: auto;
+    }
+
     .dr-layout {
         flex-direction: column;
+        overflow: visible;
+        min-height: 0;
     }
 
     .dr-sidebar {
@@ -399,10 +405,22 @@
         overflow-y: auto;
     }
 
+    .dr-main {
+        flex: none;
+        max-height: 50vh;
+        overflow-y: auto;
+    }
+
+    .dr-resize {
+        display: none;
+    }
+
     .dr-results {
         width: 100%;
+        max-width: none;
         border-left: none;
         border-top: 1px solid var(--border);
-        max-height: 200px;
+        min-height: 250px;
+        max-height: none;
     }
 }
