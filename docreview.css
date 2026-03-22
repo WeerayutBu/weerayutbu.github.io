@@ -286,6 +286,7 @@
     flex: 1;
 }
 
+.dr-reset-btn,
 .dr-export-btn {
     font-family: inherit;
     font-size: 0.78rem;
@@ -298,6 +299,7 @@
     transition: background 0.15s, border-color 0.15s;
 }
 
+.dr-reset-btn:hover,
 .dr-export-btn:hover {
     background: #f3f3f3;
     border-color: #d5d5d5;

@@ -6,6 +6,7 @@
     const popup = document.getElementById('selection-popup');
     const columnSelect = document.getElementById('column-select');
     const exportBtn = document.getElementById('export-btn');
+    const resetBtn = document.getElementById('reset-btn');
     const sidebarLabel = document.getElementById('sidebar-label');
 
     let documents = [];
@@ -112,6 +113,7 @@
 
         const reader = new FileReader();
         reader.onload = (ev) => {
+            resetResults();
             documents = parseCSV(ev.target.result);
             if (documents.length === 0) {
                 docList.innerHTML = '<p class="dr-placeholder">No records found in CSV.</p>';
@@ -303,6 +305,15 @@
     });
 
     // ── Results Panel ────────────────────────────────────────────
+    function resetResults() {
+        results = [];
+        resultsList.innerHTML = '<p class="dr-placeholder">Selections will appear here.</p>';
+        exportBtn.hidden = true;
+        resetBtn.hidden = true;
+    }
+
+    resetBtn.addEventListener('click', resetResults);
+
     function addResult(action, text, docIndex, span) {
         const doc = documents[docIndex];
         const docId = doc?.document_id || doc?.id || doc?.ID || '';
@@ -329,6 +340,7 @@
         if (results.length === 1) {
             resultsList.innerHTML = '';
             exportBtn.hidden = false;
+            resetBtn.hidden = false;
         }
 
         const card = document.createElement('div');
