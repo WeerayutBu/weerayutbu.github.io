@@ -14,6 +14,7 @@
     let activeIndex = -1;
     let results = [];
     let currentTokens = []; // parsed tokens for the active doc + column
+    let savedSelection = { text: '', span: null }; // cached for iOS tap
 
     // ── CSV Parsing ──────────────────────────────────────────────
     function parseCSV(text) {
@@ -266,6 +267,9 @@
         popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`;
         popup.style.top = `${rect.top - 44 + window.scrollY}px`;
         popup.classList.add('visible');
+
+        // Cache selection now — on iOS the selection clears when tapping the popup
+        savedSelection = { text, span: getSelectedSpan() };
     }
 
     document.addEventListener('mouseup', showPopupIfSelection);
@@ -289,11 +293,11 @@
         if (!btn) return;
 
         const action = btn.dataset.action;
-        const selectedText = window.getSelection().toString().trim();
+        // Use cached selection — on iOS the selection is already cleared by this point
+        const selectedText = savedSelection.text;
         if (!selectedText) return;
 
-        const span = getSelectedSpan();
-        addResult(action, selectedText, activeIndex, span);
+        addResult(action, selectedText, activeIndex, savedSelection.span);
         popup.classList.remove('visible');
         window.getSelection().removeAllRanges();
     });
